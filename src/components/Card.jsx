@@ -16,6 +16,8 @@ class Card extends React.Component {
             <p>
               <em>Fighting</em> - <span>Steel</span>
             </p>
+          </section>
+          <section>
             <h2>Stats:</h2>
             <ul>
               <li>70hp</li>
@@ -23,10 +25,10 @@ class Card extends React.Component {
               <li>70def</li>
             </ul>
           </section>
-          <div>
-            <button>Rename</button>
-            <button>Delete</button>
-          </div>
+        </div>
+        <div>
+          <button>Rename</button>
+          <button>Delete</button>
         </div>
       </article>
     );
