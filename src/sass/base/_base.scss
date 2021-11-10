@@ -25,6 +25,8 @@ input {
   }
 }
 
-body {
-  background-color: $secondary-color-2;
+#root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
