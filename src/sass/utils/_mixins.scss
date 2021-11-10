@@ -1,3 +1,14 @@
+@mixin mobile {
+  @media screen and (max-width: map-get($breakpoints, mobile)) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media screen and (max-width: map-get($breakpoints , tablet )) {
+    @content;
+  }
+}
+
 @mixin large-font {
   font-style: normal;
   font-weight: bold;
