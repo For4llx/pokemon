@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Card from "./components/Card";
+import App from "./App.jsx";
 import "./css/style.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Card />
-    <Card />
-    <Card />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
