@@ -1,5 +1,4 @@
 import React from "react";
-import Lucario from "../assets/lucario.png";
 
 class Card extends React.Component {
   constructor(props) {
@@ -16,24 +15,16 @@ class Card extends React.Component {
   getAllPokemons() {
     let allPokemons = [];
     for (let i = 1; i <= 20; i++) {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
-        .then((response) => {
+      allPokemons.push(
+        fetch(`https://pokeapi.co/api/v2/pokemon/${i}`).then((response) => {
           if (response.ok) return response.json();
           throw new Error("Erreur");
         })
-        .then((data) => {
-          const pokemon = data;
-          allPokemons.push({
-            id: pokemon.id,
-            name: pokemon.name,
-            types: { ...pokemon.types },
-            stats: { ...pokemon.stats },
-          });
-        });
+      );
     }
-    this.setState({ allPokemons, loaded: true }, () =>
-      console.log(this.state.allPokemons)
-    );
+    Promise.all(allPokemons).then((data) => {
+      this.setState({ allPokemons: data, loaded: true });
+    });
   }
   render() {
     const { loaded, allPokemons } = this.state;
@@ -45,19 +36,27 @@ class Card extends React.Component {
           {allPokemons.map((pokemon) => {
             return (
               <article className="card" key={pokemon.id}>
-                <img className="card__img" src={Lucario} alt={pokemon.name} />
+                <img
+                  className="card__img"
+                  src={pokemon.sprites.back_default}
+                  alt={pokemon.name}
+                />
                 <div className="card__container">
                   <div className="card__data">
                     <section className="card__header">
                       <h1 className="card__name">{pokemon.name}</h1>
                       <p>
                         <em className="card__type card__type--orange">
-                          {pokemon.types[0].type}
+                          {pokemon.types[0].type.name}
                         </em>{" "}
                         -{" "}
-                        <em className="card__type card__type--gray">
-                          {pokemon.types[1].type}
-                        </em>
+                        {pokemon.types.length > 2 ? (
+                          <em className="card__type card__type--gray">
+                            {pokemon.types[1].type.name}
+                          </em>
+                        ) : (
+                          ""
+                        )}
                       </p>
                     </section>
                     <section>
@@ -90,3 +89,23 @@ class Card extends React.Component {
 }
 
 export default Card;
+/*
+  getAllPokemons() {
+    let allPokemons = [];
+    for (let i = 1; i <= 20; i++) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
+        .then((response) => {
+          if (response.ok) return response.json();
+          throw new Error("Erreur");
+        })
+        .then((data) => {
+          const pokemon = data;
+          allPokemons.push({
+            id: pokemon.id,
+            name: pokemon.name,
+            types: { ...pokemon.types },
+            stats: { ...pokemon.stats },
+          });
+        });
+    }
+*/
